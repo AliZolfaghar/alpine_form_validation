@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <script src="/js/alpine.validation.js"></script>
+
+    <style>
+        .alert-inline{
+            padding: 2px 15px ;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+
+        <div id="regform" x-data="{ name:'' , age:'' , email:'' , password:'' } " >
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            registration form validation
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div class="mb-3">
+                                    <input class="form-control" x-model="name" placeholder="name" :class="validate_length(name,2) ? 'border-success': 'border-danger'"> 
+                                </div>
+            
+                                <div class="mb-3">
+                                    <input class="form-control" x-model="age" placeholder="age"> 
+                                </div>
+            
+                                <div class="mb-3">
+                                    <input class="form-control" x-model="email" placeholder="email"> 
+                                </div>
+            
+                                <div class="mb-3">
+                                    <input class="form-control" x-model="password" placeholder="password"> 
+                                </div>
+            
+                                <div class="mb-3">
+                                    <div  x-show="!validate_length(name,2)" class="alert alert-danger alert-inline">name min 2 char</div>
+                                    <div  x-show="!validate_num(age)" class="alert alert-danger alert-inline">age must be number</div>
+                                    <div  x-show="!validate_email(email)" class="alert alert-danger alert-inline">email is not valid</div>
+                                    <div  x-show="!validate_pass(password)" class="alert alert-danger alert-inline">pass min 6 character</div>
+                                </div>
+            
+                                <div class="mb-3 text-center">
+                                    <button class="btn btn-success"
+                                        :disabled=" !validate_length(name,2) 
+                                                    && !validate_num(age)  
+                                                    && !validate_email(email)
+                                                    && !validate_pass(password)"
+                                    >
+                                        Register
+                                    </button>
+                                </div>
+                            </div>            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+
+                <form x-data="{ open:false }">
+                    toggle div : <br><br>
+
+                    <button class="btn btn-success" :class="open ? 'btn-danger' : '' " type="button"
+                        @click="open = !open">toggle</button>
+
+                    <div x-show="open" style="width: 200px; height: 20px; background-color: coral; ">
+                        sample
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header text-center">
+                        form validation
+                    </div>
+                    <div class="card-body">
+
+                        <form x-data="{ flag:true ,  data:{} }">
+
+                            <div class="mb-3">
+                                <input class="form-control" type="text" x-model="data.username" placeholder="username">
+                                <br>
+                                <div class="akert alert-danger" x-show="data.username && data.username.length < 3 ">
+                                    username must have
+                                    more than 3
+                                    charactrs</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <input class="form-control" type="text" x-model="data.password" placeholder="password">
+                                <br>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn"
+                                    :class="   !data.username || !data.password || data.username.length < 3 || data.password.length < 3 ? 'btn-danger' : 'btn-success' "
+                                    :disabled="!data.username || !data.password || data.username.length < 3 || data.password.length < 3">
+                                    login
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+</body>
+
+</html>
